@@ -1,6 +1,6 @@
 # DistributedSystem_report8
-プロジェクトディレクトリの作成:
-まず、PCの任意の場所に「Docker_py_Intermediate」という名前（任意）の新しいフォルダを作成し、その中に上記(提出したpdfファイルを参照)のファイル構成と内容でファイルを保存する。
+プロジェクトディレクトリの作成:\n
+まず、PCの任意の場所に「Docker_py_Intermediate」という名前（任意）の新しいフォルダを作成し、その中に上記(提出したpdfファイルを参照)のファイル構成と内容でファイルを保存する。\n
 
 コマンドプロンプトの起動:
 Windowsのコマンドプロンプト（またはPowerShell、Git Bashなど）を開き、作成した「Docker_py_Intermediate」ディレクトリに移動する。
