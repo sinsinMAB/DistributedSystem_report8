@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: . # Dockerfileがあるディレクトリ
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000" # ホストの5000ポートをコンテナの5000ポートにマッピング
+    environment:
+      # 環境変数を指定（DB接続情報など）。DockerfileやPythonコードで参照される
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydatabase
+      DB_HOST: db # PostgreSQLサービスのホスト名は'db'
+      DB_PORT: 5432
+    volumes:
+      # ソースコードの変更を即座に反映させる（開発用）
+      # 本番環境ではこのボリュームマウントは通常行わない
+      - ./app:/app/app 
+    depends_on:
+      - db # webサービスはdbサービスが起動してから起動する
+    # DB接続が確立するまでwebサービスが待機するように（オプション）
+    # healthcheck:
+    #   test: ["CMD-SHELL", "pg_isready -U user -h db"]
+    #   interval: 5s
+    #   timeout: 5s
+    #   retries: 5
+
+  db:
+    image: postgres:15 # PostgreSQLのバージョンを指定。15を推奨
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      # データベースのデータを永続化するための名前付きボリューム
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432" # オプション: ホストからもDBにアクセスしたい場合にマッピング
+
+volumes:
+  db_data: # db_dataという名前付きボリュームを定義
